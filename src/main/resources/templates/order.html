@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8">
+      <title>Spring Shop Online</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+      <th:block th:include="/_header"></th:block>
+   </head>
+     <style>
+   	html, body{
+	height: 100%;
+	font-family: 'Lato', sans-serif;
+	font-family: 'Open Sans', sans-serif;
+	font-family: 'Abel', sans-serif;
+}
+  ul li{
+  	list-style: none;
+  }
+   </style>
+   <body>
+      
+      <th:block th:include="/_menu"></th:block>
+      <div class="container">
+      	<div class="row">
+      		<div class="col-lg-8 ">
+       
+      
+       
+     
+   
+       </div>
+       <div class="col-lg-4">
+       <div class="customer-info-container">
+         <h3>Customer Information:</h3>
+         <ul>
+            <li>Name: <span th:utext="${orderInfo.customerName}"></span></li>
+            <li>Email: <span th:utext="${orderInfo.customerEmail}"></span></li>
+            <li>Phone: <span th:utext="${orderInfo.customerPhone}"></span></li>
+            <li>Address: <span th:utext="${orderInfo.customerAddress}"></span></li>
+         </ul>
+         <h3>Order Summary:</h3>
+         <ul>
+            <li>Total:
+               <span class="total" th:utext="${#numbers.formatDecimal(orderInfo.amount,3,2,'COMMA')}">         
+               </span>
+            </li>
+         </ul>
+      </div>
+       </div>
+      	</div>
+      </div> 
+      
+      <!-- ------------------------------container end---------------------------------- -->
+      
+      <div class="container">
+      	<div class="row">
+      		<div class="col-lg-12 ">
+      		   <table class="table table-bordered">
+         <tr>
+            <th>Product Code</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Amount</th>
+         </tr>
+         <tr th:each="orderDetailInfo : ${orderInfo.details}">
+            <td th:utext="${orderDetailInfo.productCode}"></td>
+            <td th:utext="${orderDetailInfo.productName}"></td>
+            <td th:utext="${orderDetailInfo.quanity}"></td>
+            <td th:utext="${#numbers.formatDecimal(orderDetailInfo.price,3,2,'COMMA')}"></td>
+            <td th:utext="${#numbers.formatDecimal(orderDetailInfo.amount,3,2,'COMMA')}"></td>
+         </tr>
+      </table>
+      		 </div>
+      	</div>
+      </div> 
+      
+      <!-- ------------------------------container end---------------------------------- -->
+       
+      <th:block th:include="/_footer"></th:block>
+       
+   </body>
+</html>

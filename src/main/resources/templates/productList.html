@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Shop Online</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+    <th:block th:include="/_header"/>
+</head>
+<style>
+    .box {
+        width: 230px;
+        height: 155px;
+        margin-bottom: 5px;
+    }
+
+</style>
+<body>
+
+<th:block th:include="/_menu"/>
+
+
+<div class="container">
+    <h2 style="font-weight: bold;">商品列表</h2>
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="row">
+
+                <div th:each="prodInfo : ${paginationProducts.list}">
+                    <div class="">
+                        <div class="display" style="margin:5px">
+                            <img th:src="${prodInfo.image}" alt="..."
+                                 style="width:280px; height:320px; margin-bottom:5px; margin-right:2px;">
+                            <div class="box">
+                                <h6 class="h6_offer">
+                                    <div th:each="tag : ${prodInfo.tags}">
+                                        <span class="span-block" th:utext="${tag}"></span>
+                                    </div>
+                                </h6>
+                                <br>
+                                <p style="font-size:13px"><span th:utext="${prodInfo.name}"></span><br>
+                                    $<span th:utext="${prodInfo.price}"></span>
+                                </p>
+                                <h6 class="h6_offer"><span th:utext="${prodInfo.description}"></span></h6>
+                                <div style="text-align: center"><a th:href="@{|/buyProduct?code=${prodInfo.code}|}"
+                                                                   class="a-btn btn-link">购买</a></div>
+                            </div>
+                        </div>
+
+                        <!-- For Manager edit Product -->
+                        <th:block sec:authorize="hasAuthority('ROLE_MANAGER')">
+
+                            <a style="color:red;"
+                               th:href="@{|/admin/product?code=${prodInfo.code}|}">编辑商品</a>
+
+                        </th:block>
+                    </div>
+                </div>
+
+
+                <br/>
+
+                <!-- ------------------------------Offer end---------------------------------- -->
+
+            </div>
+
+
+        </div>
+    </div>
+    <br><br>
+    <!-- nav start  -->
+    <div class="row">
+        <div class="col-lg-6 offset-4">
+            <div class="" th:if="${paginationProducts.totalPages > 1}">
+                <th:block th:each="page : ${paginationProducts.navigationPages}">
+
+                    <a th:href="@{|/productList?page=${page}|}" th:if="${page != -1}"
+                       class="btn btn-dark" style="border-radius: 0%; margin:2px;" th:utext="${page}"></a>
+
+                    <span class="btn btn-dark" style="border-radius: 0%; margin:2px;" th:if="${page == -1}"> ... </span>
+
+                </th:block>
+            </div>
+        </div>
+    </div> <!-- nav end -->
+</div><!-- container end -->
+
+
+<!-- ------------------------------Offer end---------------------------------- -->
+
+
+<th:block th:include="/_footer"/>
+
+</body>
+</html>
