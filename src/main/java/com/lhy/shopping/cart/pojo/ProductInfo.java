@@ -2,7 +2,7 @@
  * Cider
  * Copyright (c) 2004-2021 All Rights Reserved.
  */
-package com.lhy.shopping.cart.pojo.response;
+package com.lhy.shopping.cart.pojo;
 
 import lombok.Data;
 

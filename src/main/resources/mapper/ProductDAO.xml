@@ -9,4 +9,9 @@
             and `name` like concat('%', #{likeName}, '%')
         </if>
     </select>
+    <select id="findProduct" resultType="com.lhy.shopping.cart.entity.ProductDO">
+        select *
+        from product
+        where code = #{code}
+    </select>
 </mapper>

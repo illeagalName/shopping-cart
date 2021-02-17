@@ -9,7 +9,7 @@ import com.github.pagehelper.PageHelper;
 import com.lhy.shopping.cart.dao.ProductDAO;
 import com.lhy.shopping.cart.entity.ProductDO;
 import com.lhy.shopping.cart.pojo.ListResult;
-import com.lhy.shopping.cart.pojo.response.ProductInfo;
+import com.lhy.shopping.cart.pojo.ProductInfo;
 import com.lhy.shopping.cart.service.ProductService;
 import com.lhy.shopping.cart.util.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +43,16 @@ public class ProductServiceImpl implements ProductService {
             return pInfo;
         }).collect(Collectors.toList());
         return new ListResult<>(productInfos, objects);
+    }
+
+    @Override
+    public ProductInfo findProduct(String code) {
+        ProductDO productDO = productDAO.findProduct(code);
+        ProductInfo pInfo = new ProductInfo();
+        BeanUtils.copy(productDO, pInfo);
+        if (Objects.nonNull(productDO.getTags())) {
+            pInfo.setTags(Arrays.asList(productDO.getTags().split(",")));
+        }
+        return pInfo;
     }
 }

@@ -5,7 +5,7 @@
 package com.lhy.shopping.cart.service;
 
 import com.lhy.shopping.cart.pojo.ListResult;
-import com.lhy.shopping.cart.pojo.response.ProductInfo;
+import com.lhy.shopping.cart.pojo.ProductInfo;
 
 /**
  * @author 刘红月
@@ -13,4 +13,5 @@ import com.lhy.shopping.cart.pojo.response.ProductInfo;
  */
 public interface ProductService {
     ListResult<ProductInfo> listProduct(int page, int pageSize,String likeName);
+    ProductInfo findProduct(String code);
 }

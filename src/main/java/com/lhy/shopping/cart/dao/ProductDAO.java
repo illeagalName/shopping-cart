@@ -17,4 +17,5 @@ import java.util.List;
 @Mapper
 public interface ProductDAO {
     List<ProductDO> listProduct(@Param("likeName") String likeName);
+    ProductDO findProduct(@Param("code") String code);
 }
