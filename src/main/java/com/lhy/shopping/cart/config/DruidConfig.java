@@ -26,7 +26,7 @@ public class DruidConfig {
     public StatFilter statFilter(){
         StatFilter statFilter = new StatFilter();
         statFilter.setLogSlowSql(true);
-        statFilter.setSlowSqlMillis(5);
+        statFilter.setSlowSqlMillis(100);
         statFilter.setMergeSql(true);
         return statFilter;
     }

@@ -37,19 +37,19 @@ public class ProductController extends CommonController {
     }
 
     @RequestMapping("/buyProduct")
-    public String buyProduct(Model model, @RequestParam(value = "code", defaultValue = "") String code) {
+    public String buyProduct(Model model, @RequestParam(value = "code", defaultValue = "") String code, @RequestParam(value = "quantity", defaultValue = "1") Integer quantity) {
         ProductInfo product = null;
         if (code != null && code.length() > 0) {
             product = productService.findProduct(code);
         }
         if (product != null) {
             CartInfo cartInfo = WebUtils.getCartInSession(session);
-            cartInfo.addProduct(product, 1);
+            cartInfo.addProduct(product, quantity);
         }
         return "redirect:/shoppingCart";
     }
 
-    @GetMapping( "/shoppingCart")
+    @GetMapping("/shoppingCart")
     public String shoppingCart(Model model) {
         CartInfo myCart = WebUtils.getCartInSession(session);
         CartInfo cartInfo = WebUtils.getCartInSession(session);

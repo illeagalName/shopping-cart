@@ -14,65 +14,61 @@
 <th:block th:include="/_menu"/>
 
 
-
 <div class="container cart_bag">
-    <th:block th:if="${cartForm == null || cartForm.cartItems == null || cartForm.cartItems.isEmpty()}">
+    <th:block th:if="${myCart == null || myCart.cartItems == null || myCart.cartItems.isEmpty()}">
         <h2>购物袋里没有衣物哦~</h2>
         <a th:href="@{/productList}">返回去选购</a>
     </th:block>
-    <th:block th:unless="${cartForm == null || cartForm.cartItems == null || cartForm.cartItems.isEmpty()}">
+    <th:block th:unless="${myCart == null || myCart.cartItems == null || myCart.cartItems.isEmpty()}">
         <h2 style="font-weight: bold;">购物袋</h2>
     </th:block>
     <div class="row">
         <div class="col-lg-8 col-sm-8 col-xs-12">
             <table class="table">
-
-                <th:block th:if="${cartForm != null && cartForm.cartItems != null && !cartForm.cartItems.isEmpty()}">
-                    <form method="POST" th:object="${cartForm}" th:action="@{/shoppingCart}">
-
-                        <div class="product-preview-container"
-                             th:each="cartLineInfo, varStatus : ${cartForm.cartItems}">
-                            <tr>
-                                <td><img th:src="${cartLineInfo.productInfo.image}"
-                                         width="190px"></td>
-                                <td>
-                                    <b style="color: #000;font-size:16px; font-weight: 600"
-                                       th:utext="${cartLineInfo.productInfo.name}"></b>
-                                    <p style="font-size: 14px;">
-                                        简介: <span th:utext="${cartLineInfo.productInfo.description}"></span><br>
-                                        规格: <span th:utext="${cartLineInfo.productInfo.code}"></span><br>
-                                        单价: <span th:utext="${cartLineInfo.productInfo.price}"></span>
-                                    </p>
-
-
-                                    <input type="hidden"
-                                           th:name="|cartLines[${varStatus.index}].productInfo.code|"
-                                           th:value="${cartLineInfo.productInfo.code}"/>
-                                    <a th:href="@{|/shoppingCartRemoveProduct?code=${cartLineInfo.productInfo.code}|}"
-                                       style="margin-right: 10px;">移除</a>
-                                </td>
-                                <td><input type="text" th:name="|cartLines[${varStatus.index}].quantity|"
-                                           th:value="${cartLineInfo.quantity}" class="form-control"
-                                           style="width: 50px; height: 35px;">
-
-                                </td>
-                                <td>$<span th:utext="${cartLineInfo.amount}"></span></td>
-                            </tr>
-                        </div>
-
+                <th:block th:if="${myCart != null && myCart.cartItems != null && !myCart.cartItems.isEmpty()}">
+                    <div class="product-preview-container"
+                         th:each="cartItem, varStatus : ${myCart.cartItems}">
                         <tr>
-                            <td colspan="7" align="right">
-                                <input class="btn btn-dark" type="submit" value="更改数量"/>
-                                <a th:href="@{/productList}" style="margin-left: 20px;">继续选购</a>
-                                <a th:href="@{/shoppingCartCustomer}">结算</a>
-
+                            <td><img th:src="${cartItem.productInfo.image}"
+                                     width="190px"></td>
+                            <td>
+                                <b style="color: #000;font-size:16px; font-weight: 600"
+                                   th:utext="${cartItem.productInfo.name}"></b>
+                                <p style="font-size: 14px;">
+                                    简介: <span th:utext="${cartItem.productInfo.description}"></span><br>
+                                    规格: <span th:utext="${cartItem.productInfo.code}"></span><br>
+                                    单价: <span th:utext="${cartItem.productInfo.price}"></span>
+                                </p>
+                                <!--                                    <input-->
+                                <!--                                           th:name="|cartLines[${varStatus.index}].productInfo.code|"-->
+                                <!--                                           th:value="${cartLineInfo.productInfo.code}"/>-->
+                                <a th:href="@{|/shoppingCartRemoveProduct?code=${cartItem.productInfo.code}|}"
+                                   style="margin-right: 10px;">移除</a>
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td>
+                                <a th:href="@{|/buyProduct?code=${cartItem.productInfo.code}&quantity=-1|}"
+                                   class="item-a"> - </a>
+                                <input type="text"
+                                       th:value="${cartItem.quantity}"
+                                       class="form-control"
+                                       style="width: 40px; height: 30px; float: left">
+                                <a th:href="@{|/buyProduct?code=${cartItem.productInfo.code}&quantity=1|}"
+                                   class="item-a"> + </a>
+                            </td>
+                            <td>$<span th:utext="${cartItem.amount}"></span></td>
                         </tr>
+                    </div>
 
+                    <tr>
+                        <td colspan="7" align="right">
+                            <!--                                <input class="btn btn-dark" type="submit" value="更改数量"/>-->
+                            <a th:href="@{/productList}" style="margin-left: 20px;">继续选购</a>
+                            <!--                                <a th:href="@{/shoppingCartCustomer}">结算</a>-->
 
-                    </form>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </th:block>
             </table>
         </div> <!-- -----col-lg-8 col-sm-8 col-xs-12 end --- -->

@@ -76,6 +76,30 @@ img {
     display: inline-block;
     font-size: 16px;
 }
+.item-a{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 26px;
+    text-align: center;
+    font-size: 30px;
+    color: #999;
+    cursor: pointer;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    float: left;
+    margin: 2px;
+}
+.item-a:hover {
+    color: #fff;
+    background: #0a90f5;
+}
+
+.item-a:focus {
+    color: #fff;
+    background: #0a90f5;
+    outline: none;
+}
 
 .a-btn:hover {
     color: #fff;
