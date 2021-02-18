@@ -16,11 +16,11 @@
 
 <div class="container cart_bag">
     <th:block th:if="${myCart == null || myCart.cartItems == null || myCart.cartItems.isEmpty()}">
-        <h2>购物袋里没有衣物哦~</h2>
+        <h2>购物车里没有衣物哦~</h2>
         <a th:href="@{/productList}">返回去选购</a>
     </th:block>
     <th:block th:unless="${myCart == null || myCart.cartItems == null || myCart.cartItems.isEmpty()}">
-        <h2 style="font-weight: bold;">购物袋</h2>
+        <h2 style="font-weight: bold;">购物车</h2>
     </th:block>
     <div class="row">
         <div class="col-lg-8 col-sm-8 col-xs-12">
@@ -42,7 +42,7 @@
                                 <!--                                    <input-->
                                 <!--                                           th:name="|cartLines[${varStatus.index}].productInfo.code|"-->
                                 <!--                                           th:value="${cartLineInfo.productInfo.code}"/>-->
-                                <a th:href="@{|/shoppingCartRemoveProduct?code=${cartItem.productInfo.code}|}"
+                                <a th:href="@{|/removeProduct?code=${cartItem.productInfo.code}|}"
                                    style="margin-right: 10px;">移除</a>
                             </td>
                             <td>
