@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class OrderDetailDO {
     private Long id;//int auto_increment
     private Long orderId;//int                                 null,
-    private Long productId;//int                                 null,
+    private String productCode;//int                                 null,
     private Integer quantity;//int                                 null comment '数量',
     private BigDecimal price;//decimal(10, 4)                      null comment '单价',
     private BigDecimal amount;//decimal(10, 4)                      null comment '小计',

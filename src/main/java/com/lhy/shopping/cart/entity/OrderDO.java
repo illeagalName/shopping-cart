@@ -19,7 +19,11 @@ public class OrderDO {
     private LocalDateTime orderDate; //                  null comment '下单时间',
     private BigDecimal amount; //                  null comment '金额',
     private Long userId; //                  null,
-    private String userAddress; //                  null,
+    private String name; //                  null,
+    private String email; //                  null,
+    private String phone; //                  null,
+    private String address; //                  null,
     private LocalDateTime addTime; //CURRENT_TIMESTAMP null,
     private LocalDateTime updateTime; //                  null
+    private Long orderNum;
 }

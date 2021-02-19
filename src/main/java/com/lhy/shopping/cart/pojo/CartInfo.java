@@ -11,6 +11,8 @@ public class CartInfo {
 
     private final List<CartItemInfo> cartItems = new ArrayList<>();
 
+    private Long orderNum;
+
     public CartInfo() {
 
     }
@@ -84,14 +86,12 @@ public class CartInfo {
         return this.cartItems.stream().map(CartItemInfo::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-//    public void updateQuantity(CartInfo cartForm) {
-//        if (cartForm != null) {
-//            List<CartItemInfo> lines = cartForm.getCartLines();
-//            for (CartItemInfo line : lines) {
-//                this.updateProduct(line.getProductInfo().getCode(), line.getQuantity());
-//            }
-//        }
-//
-//    }
+    public Long getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Long orderNum) {
+        this.orderNum = orderNum;
+    }
 
 }

@@ -4,7 +4,6 @@
  */
 package com.lhy.shopping.cart.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.lhy.shopping.cart.component.CustomerInfoValidator;
 import com.lhy.shopping.cart.pojo.CartInfo;
 import com.lhy.shopping.cart.pojo.CustomerInfo;
@@ -20,8 +19,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -44,7 +43,6 @@ public class ProductController extends CommonController {
         if (target == null) {
             return;
         }
-        log.info("target : {}", JSON.toJSONString(target));
 
         if (target.getClass() == CustomerInfo.class) {
             dataBinder.setValidator(customerInfoValidator);
@@ -80,6 +78,7 @@ public class ProductController extends CommonController {
     public String shoppingCart(Model model) {
         CartInfo myCart = WebUtils.getCartInCache(request);
         model.addAttribute("myCart", myCart);
+        model.addAttribute("selected", 2);
         return "shoppingCart";
     }
 
@@ -96,21 +95,25 @@ public class ProductController extends CommonController {
         return "redirect:/shoppingCart";
     }
 
-    @GetMapping(value = {"/shoppingCartCustomer"})
+    @GetMapping("/shoppingCartCustomer")
     public String shoppingCartCustomerInfo(Model model) {
         CartInfo cartInfo = WebUtils.getCartInCache(request);
         if (cartInfo.isEmpty()) {
             return "redirect:/shoppingCart";
         }
         CustomerInfo customerInfo = cartInfo.getCustomerInfo();
+        if (Objects.isNull(customerInfo)) {
+            // 从cookies中取出客户信息
+            customerInfo = WebUtils.getCustomerInCookies(request);
+        }
 
         model.addAttribute("customerForm", Optional.ofNullable(customerInfo).orElseGet(CustomerInfo::new));
-
+        model.addAttribute("selected", 2);
         return "shoppingCartCustomer";
     }
 
-    @PostMapping(value = {"/shoppingCartCustomer"})
-    public String shoppingCartCustomerSave(Model model, @ModelAttribute("customerInfo") @Validated CustomerInfo customerInfo, BindingResult result, final RedirectAttributes redirectAttributes) {
+    @PostMapping("/shoppingCartCustomer")
+    public String shoppingCartCustomerSave(Model model, @ModelAttribute("customerInfo") @Validated CustomerInfo customerInfo, BindingResult result) {
 
         if (result.hasErrors()) {
             customerInfo.setValid(false);
@@ -120,11 +123,14 @@ public class ProductController extends CommonController {
         customerInfo.setValid(true);
         CartInfo cartInfo = WebUtils.getCartInCache(request);
         cartInfo.setCustomerInfo(customerInfo);
+
+        WebUtils.setCustomerInCookies(response, customerInfo);
+
         return "redirect:/shoppingCartConfirmation";
     }
 
-    @RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
-    public String shoppingCartConfirmationReview( Model model) {
+    @GetMapping("/shoppingCartConfirmation")
+    public String shoppingCartConfirmationReview(Model model) {
         CartInfo cartInfo = WebUtils.getCartInCache(request);
         if (cartInfo.isEmpty()) {
             return "redirect:/shoppingCart";
@@ -132,6 +138,7 @@ public class ProductController extends CommonController {
             return "redirect:/shoppingCartCustomer";
         }
         model.addAttribute("myCart", cartInfo);
+        model.addAttribute("selected", 2);
         return "shoppingCartConfirmation";
     }
 

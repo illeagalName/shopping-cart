@@ -2,68 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Spring Shop Online</title>
+    <title>Shop Online</title>
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
     <th:block th:include="/_header"/>
 </head>
 <body>
 
 <th:block th:include="/_menu"/>
-
-<div class="page-title">Confirmation</div>
-<div class="customer-info-container">
-    <h3>Customer Information:</h3>
-    <ul>
-        <li>Name: <span th:utext="${myCart.customerInfo.name}"></span></li>
-        <li>Email: <span th:utext="${myCart.customerInfo.email}"></span></li>
-        <li>Phone: <span th:utext="${myCart.customerInfo.phone}"></span></li>
-        <li>Address: <span th:utext="${myCart.customerInfo.address}"></span></li>
-    </ul>
-    <h3>Cart Summary:</h3>
-    <ul>
-        <li>Quantity: <span th:utext="${myCart.quantityTotal}"></span>$</li>
-        <li>Total:
-            <span class="total"
-                  th:utext="${#numbers.formatDecimal(myCart.amountTotal,3,2,'COMMA')}">  
-               </span>
-        </li>
-    </ul>
-</div>
-<form method="POST" th:action="@{/shoppingCartConfirmation}">
-    <!-- Edit Cart -->
-    <a class="navi-item" th:href="@{/shoppingCart}">
-        Edit Cart
-    </a>
-    <!-- Edit Customer Info -->
-    <a class="navi-item" th:href="@{/shoppingCartCustomer}">
-        Edit Customer Info
-    </a>
-    <!-- Send/Save -->
-    <input type="submit" value="Send" class="button-send-sc"/>
-</form>
 <div class="container">
+    <form method="POST" th:action="@{/shoppingCartConfirmation}">
+        <a class="navi-item a-btn btn-link" th:href="@{/shoppingCart}">
+            重新选购
+        </a>
+        <a class="navi-item a-btn btn-link" th:href="@{/shoppingCartCustomer}">
+            编辑收货地址
+        </a>
+        <input type="submit" value="确认" class="btn btn-outline-primary"/>
+    </form>
+    <div class="line_02"></div>
+    <div class="customer-info-container">
+        <h3>客户信息:</h3>
+        <ul>
+            <li>姓名: <span th:utext="${myCart.customerInfo.name}"></span></li>
+            <li>邮箱: <span th:utext="${myCart.customerInfo.email}"></span></li>
+            <li>手机号: <span th:utext="${myCart.customerInfo.phone}"></span></li>
+            <li>地址: <span th:utext="${myCart.customerInfo.address}"></span></li>
+        </ul>
+        <h3>购物概要:</h3>
+        <ul>
+            <li>数量: <span th:utext="${myCart.quantityTotal}"></span> 件</li>
+            <li>总共:
+                <span class="total"
+                      th:utext="${#numbers.formatDecimal(myCart.amountTotal,1,2,'POINT')}">
+               </span>$
+            </li>
+        </ul>
+    </div>
     <div class="product-preview-container" th:each="cartLineInfo : ${myCart.cartItems}">
         <ul>
             <li>
-                <img class="product-image"
-                     src="@{|/productImage?code=${cartLineInfo.productInfo.code}|}"/>
+                <img class="product-image" th:src="${cartLineInfo.productInfo.image}"/>
             </li>
             <li>
-                Code: <span th:utext="${cartLineInfo.productInfo.code}"></span>
-                <input
-                        type="hidden" name="code" th:value="${cartLineInfo.productInfo.code}"/>
+                规格: <span th:utext="${cartLineInfo.productInfo.code}"></span>
+                <input type="hidden" name="code" th:value="${cartLineInfo.productInfo.code}"/>
             </li>
-            <li>Name: <span th:utext="${cartLineInfo.productInfo.name}"></span></li>
-            <li>Price:
+            <li>名称: <span th:utext="${cartLineInfo.productInfo.name}"></span></li>
+            <li>价格:
                 <span class="price"
-                      th:utext="${#numbers.formatDecimal(cartLineInfo.productInfo.price,3,2,'COMMA')}">
-                  </span>
+                      th:utext="${#numbers.formatDecimal(cartLineInfo.productInfo.price,1,2,'POINT')}"></span>
             </li>
-            <li>Quantity: <span th:utext="${cartLineInfo.quantity}"></span></li>
-            <li>Subtotal:
-                <span class="subtotal"
-                      th:utext="${#numbers.formatDecimal(cartLineInfo.amount,3,2,'COMMA')}">
-                  </span>
+            <li>数量: <span th:utext="${cartLineInfo.quantity}"></span></li>
+            <li>小计:
+                <span class="subtotal" th:utext="${#numbers.formatDecimal(cartLineInfo.amount,1,2,'POINT')}"></span>
             </li>
         </ul>
     </div>
