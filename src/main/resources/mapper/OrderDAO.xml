@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lhy.shopping.cart.dao.OrderDAO">
     <insert id="saveOrder" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO order (order_date, amount, user_id, name, email, phone, address, order_num)
+        INSERT INTO `order` (order_date, amount, user_id, `name`, email, phone, address, order_num)
         VALUES (#{orderDate}, #{amount}, #{userId}, #{name}, #{email}, #{phone}, #{address}, #{orderNum})
     </insert>
     <insert id="saveOrderDetail">
-        <foreach collection="orderDetailDOS" index="index" separator=";" item="item">
-            INSERT INTO order_detail (order_id, product_code, quantity, price, amount) VALUES
-            (#{item.orderId},#{productCode},#{item.quantity},#{item.price},#{item.amount})
+        INSERT INTO `order_detail` (`order_id`, `product_code`, `quantity`, `price`, `amount`)
+        VALUES
+        <foreach collection="orderDetailDOS" index="index" separator="," item="item">
+            (#{item.orderId},#{item.productCode},#{item.quantity},#{item.price},#{item.amount})
         </foreach>
     </insert>
 </mapper>

@@ -39,7 +39,8 @@ public class OrderController extends CommonController {
         try {
             orderService.saveOrder(cartInfo);
         } catch (Exception e) {
-            return "shoppingCartConfirmation";
+            log.error("异常 ", e);
+            return "redirect:/shoppingCartConfirmation";
         }
 
         // 从session中删除cart信息

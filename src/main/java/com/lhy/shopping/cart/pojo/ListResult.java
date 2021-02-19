@@ -15,18 +15,21 @@ public class ListResult<T> {
     private int maxResult;
     private int totalPages;
 
-    private int maxNavigationPage = 2;
+    private int maxNavigationPage = 4;
 
     private List<Integer> navigationPages;
 
 
-    public ListResult(List<T> list,Page page) {
+    public ListResult(List<T> list, Page page) {
         // Total Records
-        this.totalRecords = (int)page.getTotal();
         this.currentPage = page.getPageNum();
         this.list = list;
         this.maxResult = page.getPageSize();
         this.totalPages = page.getPages();
+
+        if (maxNavigationPage > totalPages) {
+            this.maxNavigationPage = totalPages;
+        }
 
         this.calcNavigationPages();
     }
@@ -40,24 +43,20 @@ public class ListResult<T> {
         int begin = current - this.maxNavigationPage / 2;
         int end = current + this.maxNavigationPage / 2;
 
-        // The first page
         navigationPages.add(1);
         if (begin > 2) {
-            // Using for '...'
             navigationPages.add(-1);
         }
 
-        for (int i = begin; i < end; i++) {
+        for (int i = begin; i <= end; i++) {
             if (i > 1 && i < this.totalPages) {
                 navigationPages.add(i);
             }
         }
 
-        if (end < this.totalPages - 2) {
-            // Using for '...'
+        if (end < this.totalPages - 1) {
             navigationPages.add(-1);
         }
-        // The last page.
         navigationPages.add(this.totalPages);
     }
 }

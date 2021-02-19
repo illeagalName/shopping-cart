@@ -9,6 +9,7 @@ public class CustomerInfo {
     private String address;
     private String email;
     private String phone;
+    private Long userId;
  
     private boolean valid;
 

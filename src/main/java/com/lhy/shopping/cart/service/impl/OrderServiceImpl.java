@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
         orderDO.setOrderDate(LocalDateTime.now());
         orderDO.setOrderNum(idWorker.nextId());
         orderDO.setAmount(cartInfo.getAmountTotal());
+        orderDO.setUserId(Optional.ofNullable(cartInfo.getCustomerInfo().getUserId()).orElse(0L));
         orderDAO.saveOrder(orderDO);
 
         List<CartItemInfo> cartItems = cartInfo.getCartItems();
