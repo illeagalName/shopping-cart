@@ -68,34 +68,34 @@
             <section id="spring_col1">
                 <h1>LOG IN</h1>
 
-                <a href="">Forgot Your Password?</a>
+<!--                <a href="">忘记密码</a>-->
 
                 <!-- /login?error=true -->
                 <th:block
                         th:if="${#session != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}">
                     <div th:if="${#request.getParameter('error') == 'true'}"
                          style="color: red; margin: 10px 0px;">
-                        Login Failed!!!<br/> Reason :
+                        登录失败!!!<br/> 原因 :
                         <span th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></span>
                     </div>
                 </th:block>
 
                 <form method="POST" th:action="@{/j_spring_security_check}">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
+                        <label for="exampleInputEmail1">用户名</label>
                         <input type="text" name="userName" class="form-control" id="exampleInputEmail1"
                                aria-describedby="emailHelp">
 
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
+                        <label for="exampleInputPassword1">密码</label>
                         <input type="password" name="password" class="form-control" id="exampleInputPassword1">
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        <label class="form-check-label" for="exampleCheck1">记住我</label>
                     </div>
-                    <button type="submit" class="spring-btn-black">LOG IN <span class="fa fa-arrow-right"
+                    <button type="submit" class="spring-btn-black">登录 <span class="fa fa-arrow-right"
                                                                                 style="margin-left: 9px;"></span>
                     </button>
 
@@ -105,42 +105,42 @@
 
                 <br><br>
 
-                By clicking 'Log In' you agree to our website <a href="">Creators Club Terms & Conditions </a>, <a
-                    href="">Spring Privacy Notice</a> and <a href="">Terms & Conditions</a>.
+<!--                By clicking 'Log In' you agree to our website <a href="">Creators Club Terms & Conditions </a>, <a-->
+<!--                    href="">Spring Privacy Notice</a> and <a href="">Terms & Conditions</a>.-->
 
                 <!--  ----------- form end -------------- -->
 
 
             </section>
-            <div style="text-align:left">
-                <h3>User/Password:</h3>
-                <ul>
-                    <li>employee1/123</li>
-                    <li>manager1/123</li>
-                </ul>
-            </div>
+<!--            <div style="text-align:left">-->
+<!--                <h3>User/Password:</h3>-->
+<!--                <ul>-->
+<!--                    <li>employee1/123</li>-->
+<!--                    <li>manager1/123</li>-->
+<!--                </ul>-->
+<!--            </div>-->
         </div>
 
         <div class="col-lg-6 col-sm-4 col-xs-12">
 
-            <h1>JOIN THE CLUB. GET REWARDED.</h1>
-            Join the adidas Creators Club membership program:
+            <h1>加入俱乐部，你将受益良多。</h1>
+            加入XXX创造者俱乐部会员计划:
             <ul>
-                <li><i class="fas fa-check"></i> Get immediate access to all Challenger level rewards</li>
-                <li><i class="fas fa-check"></i> Earn access to shop limited edition products</li>
-                <li><i class="fas fa-check"></i> Level up for exclusive access to sport, yoga and music events</li>
-                <li><i class="fas fa-check"></i> Receive our best special offers and promotions</li>
+                <li><i class="fas fa-check"></i> 立即获得所有挑战者级奖励</li>
+                <li><i class="fas fa-check"></i> 获得商店限量版产品的使用权</li>
+                <li><i class="fas fa-check"></i> 升级后可参加体育、瑜伽和音乐活动</li>
+                <li><i class="fas fa-check"></i> 获得我们最好的特别优惠和促销</li>
 
             </ul>
 
-            Join now and start earning points to access new levels and rewards. It's time to unlock the best of adidas.
-            <br><br>
-            <a href="" class="spring-btn-black"/>JOIN THE CLUB <span class="fa fa-arrow-right"
-                                                                     style="margin-left: 9px;"></span></a>
+            现在加入，并开始赢取会员等级和奖励。是时候展现XXX最好的一面了。
+<!--            <br><br>-->
+<!--            <a href="" class="spring-btn-black"/>JOIN THE CLUB <span class="fa fa-arrow-right"-->
+<!--                                                                     style="margin-left: 9px;"></span></a>-->
 
-            <br><br>
+<!--            <br><br>-->
 
-            <img src="https://www.adidas.com/glass/react/ce0f36d/assets/img/CC2.0_my_account_register.jpg">
+<!--            <img src="https://www.adidas.com/glass/react/ce0f36d/assets/img/CC2.0_my_account_register.jpg">-->
 
 
         </div>

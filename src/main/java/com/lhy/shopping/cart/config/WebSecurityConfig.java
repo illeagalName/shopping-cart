@@ -38,10 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Requires login with role ROLE_EMPLOYEE or ROLE_MANAGER.
         // If not, it will redirect to /admin/login.
         http.authorizeRequests().antMatchers("/admin/orderList", "/admin/order", "/admin/accountInfo")//
-                .access("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_MANAGER')");
+                .hasAnyRole("ROLE_EMPLOYEE", "ROLE_MANAGER");
 
         // 商品管理 需要 ROLE_MANAGER
-        http.authorizeRequests().antMatchers("/admin/product").access("hasRole('ROLE_MANAGER')");
+        http.authorizeRequests().antMatchers("/admin/product").hasRole("ROLE_MANAGER");
 
         // When user login, role XX.
         // But access to the page requires the YY role,
@@ -49,13 +49,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Configuration for Login Form.
-        http.authorizeRequests().and().formLogin()//
-
-                //
+        http.authorizeRequests().and().formLogin()
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/admin/login")//
-                .defaultSuccessUrl("/admin/accountInfo")//
-                .failureUrl("/admin/login?error=true")//
+                .loginPage("/login")//
+                .defaultSuccessUrl("/accountInfo")//
+                .failureUrl("/login?error=true")//
                 .usernameParameter("userName")//
                 .passwordParameter("password")
 
