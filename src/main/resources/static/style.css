@@ -75,6 +75,7 @@ img {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    float: left;
 }
 .item-a{
     display: inline-block;

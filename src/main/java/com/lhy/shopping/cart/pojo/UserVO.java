@@ -11,5 +11,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class UserVO implements Serializable {
     private Long id;
-    private String name;
+    private String userName; //用户姓名',
+    private String nickName;//'昵称',
+    private String email;//'邮箱',
+    private String phone;//'手机号',
 }

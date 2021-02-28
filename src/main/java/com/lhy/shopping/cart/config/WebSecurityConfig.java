@@ -1,6 +1,7 @@
 package com.lhy.shopping.cart.config;
 
 
+import com.lhy.shopping.cart.component.CustomAuthenticationSuccessHandler;
 import com.lhy.shopping.cart.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -45,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login?error=true")
                 .usernameParameter("userName")
                 .passwordParameter("password")
+                .successHandler(customAuthenticationSuccessHandler)
                 .and()
                 .logout().logoutSuccessUrl("/index")
                 .and()

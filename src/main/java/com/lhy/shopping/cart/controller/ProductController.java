@@ -61,17 +61,34 @@ public class ProductController extends CommonController {
         return "productList";
     }
 
-    @RequestMapping("/buyProduct")
+    @GetMapping("/buyProduct")
     public String buyProduct(Model model, @RequestParam(value = "code", defaultValue = "") String code, @RequestParam(value = "quantity", defaultValue = "1") Integer quantity) {
         ProductInfo product = null;
         if (code != null && code.length() > 0) {
             product = productService.findProduct(code);
         }
         if (product != null) {
-            CartInfo cartInfo = WebUtils.getCartInCache(request);
-            cartInfo.addProduct(product, quantity);
+            addProductToCart(quantity, product);
         }
         return "redirect:/shoppingCart";
+    }
+
+    @GetMapping("/addCart")
+    public String addCart(Model model, @RequestParam(value = "code", defaultValue = "") String code, @RequestParam(value = "quantity", defaultValue = "1") Integer quantity) {
+        ProductInfo product = null;
+        if (code != null && code.length() > 0) {
+            product = productService.findProduct(code);
+        }
+        if (product != null) {
+            addProductToCart(quantity, product);
+        }
+        return "redirect:/productList";
+    }
+
+    private void addProductToCart(Integer quantity, ProductInfo product) {
+        CartInfo cartInfo = WebUtils.getCartInCache(request);
+        cartInfo.addProduct(product, quantity);
+        WebUtils.setCartInCache(request, cartInfo);
     }
 
     @GetMapping("/shoppingCart")
@@ -89,10 +106,15 @@ public class ProductController extends CommonController {
             product = productService.findProduct(code);
         }
         if (product != null) {
-            CartInfo cartInfo = WebUtils.getCartInCache(request);
-            cartInfo.removeProduct(product);
+            removeProductToCart(product);
         }
         return "redirect:/shoppingCart";
+    }
+
+    private void removeProductToCart(ProductInfo product) {
+        CartInfo cartInfo = WebUtils.getCartInCache(request);
+        cartInfo.removeProduct(product);
+        WebUtils.setCartInCache(request, cartInfo);
     }
 
     @GetMapping("/shoppingCartCustomer")

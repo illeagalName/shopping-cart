@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Spring Shop Online</title>
+    <title>Shop Online</title>
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
     <th:block th:include="/_header"/>
 </head>
@@ -14,8 +14,8 @@
     }
 
 </style>
-<body>
 
+<body>
 <th:block th:include="/_menu"/>
 
 
@@ -45,6 +45,9 @@
                                 <h6 class="h6_offer"><span th:utext="${prodInfo.description}"></span></h6>
                                 <div style="text-align: center"><a th:href="@{|/buyProduct?code=${prodInfo.code}|}"
                                                                    class="a-btn btn-link">购买</a></div>
+                                <div style="text-align: center"><a th:href="@{|/addCart?code=${prodInfo.code}|}"
+                                                                   class="a-btn btn-link">加入购物车</a></div>
+                                </div>
                             </div>
                         </div>
 
@@ -91,6 +94,5 @@
 
 
 <th:block th:include="/_footer"/>
-
 </body>
 </html>

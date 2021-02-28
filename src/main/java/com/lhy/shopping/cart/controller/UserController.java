@@ -38,9 +38,8 @@ public class UserController extends CommonController {
         return "accountInfo";
     }
 
-    @GetMapping( "logout" )
-    public String logout(Model model) {
-//        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
-        return "index";
-    }
+//    @GetMapping( "logout" )
+//    public String logout(Model model) {
+//        return "index";
+//    }
 }
