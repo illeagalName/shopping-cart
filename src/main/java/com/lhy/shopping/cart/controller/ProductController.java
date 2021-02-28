@@ -145,6 +145,7 @@ public class ProductController extends CommonController {
         customerInfo.setValid(true);
         CartInfo cartInfo = WebUtils.getCartInCache(request);
         cartInfo.setCustomerInfo(customerInfo);
+        WebUtils.setCartInCache(request, cartInfo);
 
         WebUtils.setCustomerInCookies(response, customerInfo);
 
