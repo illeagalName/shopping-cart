@@ -33,33 +33,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
-
-        // Requires login with role ROLE_EMPLOYEE or ROLE_MANAGER.
-        // If not, it will redirect to /admin/login.
-        http.authorizeRequests().antMatchers("/admin/orderList", "/admin/order", "/admin/accountInfo")//
-                .hasAnyRole("ROLE_EMPLOYEE", "ROLE_MANAGER");
-
-        // 商品管理 需要 ROLE_MANAGER
-        http.authorizeRequests().antMatchers("/admin/product").hasRole("ROLE_MANAGER");
-
-        // When user login, role XX.
-        // But access to the page requires the YY role,
-        // An AccessDeniedException will be thrown.
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-
-        // Configuration for Login Form.
-        http.authorizeRequests().and().formLogin()
-                .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")//
-                .defaultSuccessUrl("/accountInfo")//
-                .failureUrl("/login?error=true")//
-                .usernameParameter("userName")//
+        http.authorizeRequests()
+                .antMatchers("/admin/orderList", "/admin/order", "/admin/accountInfo")
+                .hasAnyRole("ROLE_EMPLOYEE", "ROLE_MANAGER")
+                .antMatchers("/admin/product").access("hasRole('ROLE_MANAGER')")
+                .and()
+                .formLogin()
+                .loginProcessingUrl("/login")
+                .loginPage("/login")
+                .defaultSuccessUrl("/accountInfo")
+                .failureUrl("/login?error=true")
+                .usernameParameter("userName")
                 .passwordParameter("password")
-
-                // Configuration for the Logout page.
-                // (After logout, go to home page)
-                .and().logout().logoutUrl("/admin/logout").logoutSuccessUrl("/");
+                .and()
+                .logout().logoutSuccessUrl("/index")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/login","/index","/style.css").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .csrf().disable();
 
     }
 }

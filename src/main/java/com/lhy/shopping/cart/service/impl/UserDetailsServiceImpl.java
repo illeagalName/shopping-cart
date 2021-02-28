@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     AccountDAO accountDAO;
 
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AccountDO account = accountDAO.findAccount(username);
@@ -32,6 +36,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (account == null) {
             throw new UsernameNotFoundException("User " + username + " was not found in the database");
         }
+
+        // 加密方式保持一致
+        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
 
         String role = account.getUserRole();
 

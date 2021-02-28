@@ -2,19 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">
    <head>
       <meta charset="UTF-8">
-      <title>Spring Shop Online</title>
+      <title>Shop Online</title>
       <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
-      <th:block th:include="/_header"></th:block>
+      <th:block th:include="/_header"/>
    </head>
    <body>
       
-      <th:block th:include="/_menu"></th:block>
-      <div class="page-title">Account Info</div>
+      <th:block th:include="/_menu"/>
+      <div class="page-title">账户</div>
       <div class="account-container">
          <ul>
-            <li>User Name: <span th:utext="${#request.userPrincipal.name}"></span></li>
+            <li>用户名: <span th:utext="${#request.userPrincipal.name}"></span></li>
             <li>
-               Role:
+               角色:
                <ul>
                   <li th:each="auth : ${userDetails.authorities}" th:utext="${auth.authority}"></li>
                </ul>
@@ -22,7 +22,7 @@
          </ul>
       </div>
        
-      <th:block th:include="/_footer"></th:block>
+      <th:block th:include="/_footer"/>
        
    </body>
 </html>

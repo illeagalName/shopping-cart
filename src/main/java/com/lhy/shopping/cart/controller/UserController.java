@@ -24,15 +24,23 @@ public class UserController extends CommonController {
         return "login";
     }
 
+    @GetMapping("index")
+    public String index(Model model) {
+        return "index";
+    }
+
     @GetMapping( "accountInfo" )
     public String accountInfo(Model model) {
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(userDetails.getPassword());
-        System.out.println(userDetails.getUsername());
-        System.out.println(userDetails.isEnabled());
 
         model.addAttribute("userDetails", userDetails);
         return "accountInfo";
+    }
+
+    @GetMapping( "logout" )
+    public String logout(Model model) {
+//        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+        return "index";
     }
 }
