@@ -66,7 +66,9 @@ public class WebUtils {
     }
 
     public static void removeCartInCache(HttpServletRequest request) {
-        request.getSession().removeAttribute("myCart");
+        UserVO customerInCookies = getUserInCookies(request);
+        RBucket<CartInfo> bucket = redissonClient.getBucket(customerInCookies.getId() + ":myCart");
+        bucket.delete();
     }
 
     public static void storeLastOrderedCartInCache(HttpServletRequest request, CartInfo cartInfo) {
